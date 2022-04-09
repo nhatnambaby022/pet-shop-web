@@ -1,0 +1,90 @@
+%
+\documentclass[a4paper,journal,11pt]{IEEEtran}
+\usepackage{blindtext}
+\usepackage{vntex}
+%\usepackage[utf8]{vietnam}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{wrapfig}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{scrextend}
+\usepackage{ltxtable}
+\usepackage{slashbox}
+\usepackage{diagbox}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{times}
+
+\renewcommand{\thetable}{\arabic{table}}
+\usepackage[left=3.5cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+ \title{\Large\bf
+\changefontsizes{16pt}TÊN BÀI BÁO TIẾNG VIỆT
+\normalfont
+\\
+\Large \changefontsizes{14pt} \textit{\\*TÊN BÀI BÁO TIẾNG ANH}
+}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\changefontsizes{7pt}NÔNG NGHIỆP - THỦY SẢN}
+\lhead{\changefontsizes{7pt}TẠP CHÍ KHOA HỌC TRƯỜNG ĐẠI HỌC TRÀ VINH, SỐ..., THÁNG ... NĂM ...}
+\cfoot{\thepage}
+% danh so trang
+\pagenumbering{arabic}
+%\setcounter{page}{51}
+%\cfoot{\leftmark}
+% The paper headers
+\markboth{TẠP CHÍ KHOA HỌC TRƯỜNG ĐẠI HỌC TRÀ VINH, SỐ..., THÁNG ... NĂM ...}{}
+%make the title area
+%xoa danh so trang
+%\pagenumbering{gobble}
+\maketitle
+\renewcommand\headrule{}
+
+%\boldmath
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Tóm tắt} -- \textit {Mô tả vắn tắt mục tiêu nghiên cứu, phương pháp thực hiện, kết quả nghiên cứu và kết luận (khoảng 150-250 từ).}
+	
+\textbf{\textit {Từ khóa: 03 – 06 từ hoặc cụm từ (tất cả các
+từ phải hiện diện trong phần tóm tắt)}}\\
+%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\textbf{Abstract} -- \textit {Phải tương thích với phần Tóm tắt và tác giả chịu trách nhiệm hoàn toàn cho việc
+biên dịch chính xác.}
+	
+\textbf{\textit {Keywords: tương thích với từ khóa bằng tiếng Việt.}}
+\section{ĐẶT VẤN ĐỀ}
+	Tác giả nêu được lí do thực hiện nghiên cứu (đặc biệt làm rõ cái mới của nghiên cứu), đối tượng phục vụ của công trình nghiên cứu.
+\section{TỔNG QUAN NGHIÊN CỨU}
+Tác giả trình bày các nghiên cứu có liên quan trực tiếp đến công trình \cite{thuan}, qua đó phân tích những nội dung đạt được và chưa triển khai ở các bài báo đó.
+\section{PHƯƠNG PHÁP VÀ PHƯƠNG TIỆN NGHIÊN CỨU}
+Mô tả đầy đủ các nội dung đã triển khai trong công trình, gồm các phần như sau:
+\subsection{Thời gian và địa điểm thí nghiệm}
+\subsection{Phương pháp bố trí thí nghiệm}
+\subsection{Phương pháp thu thập số liệu}
+\subsection{Phương pháp thu thập số liệu}
+\section{KẾT QUẢ VÀ THẢO LUẬN}
+Tác giả trình bày các kết quả đạt được của công trình, phân tích và so sánh với kết quả của các công trình được đề cập trong phần tổng quan \cite{cuong}.
+\section{KẾT LUẬN VÀ KHUYẾN NGHỊ\\ (NẾU CÓ)}
+Phát biểu các kết luận quan trọng nhất với các luận cứ rõ ràng; kết luận phải bám sát chủ đề đã trình bày trong phần giới thiệu.
+
+Đề xuất nghiên cứu trong tương lai kế thừa kết quả đã đạt được hoặc đề nghị áp dụng kết quả nếu nghiên cứu có kết quả thật thuyết phục.
+\section{LỜI CẢM ƠN (NẾU CÓ)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\refname{\changefontsizes{10pt}TÀI LIỆU THAM KHẢO}
+\bibliography{mybib}
+\bibliographystyle{vancouver}
+(Liệt kê đầy đủ các tài liệu tham khảo đã được trích dẫn trong bài viết. Không liệt kê tài liệu không được trích dẫn)
+\section{PHỤ LỤC (NẾU CÓ)}
+% that's all folks
+\end{document}
+
+

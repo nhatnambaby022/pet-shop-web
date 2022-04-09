@@ -1,0 +1,178 @@
+
+.auth-component {
+  height: 100vh;
+  width: 100vw;
+  background-color: antiquewhite;
+  background-image: url(./assets/backgroud.png);
+  background-size: 120px;
+  background-repeat: repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+input {
+  height: 30px;
+  width: 250px;
+  border-radius: 6px;
+  border-style: double;
+  margin-top: 6px;
+}
+
+.btn-submit {
+  height: 30px;
+  width: 120px;
+  color: black;
+  background-color: aqua;
+  outline-style: none;
+  border: none;
+  border-radius: 5px;
+  margin-top: 12px;
+}
+.btn-submit:hover {
+  color: white;
+}
+
+/*Login form*/
+.LoginForm {
+  height: 60%;
+  max-height: 750px;
+  min-height: 500px;
+  width: 40%;
+  max-width: 400px;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+}
+
+/*Register form*/
+.RegisterForm {
+  height: 60%;
+  max-height: 750px;
+  min-height: 500px;
+  width: 40%;
+  max-width: 400px;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+}
+
+/* Navbar menu*/
+.nav {
+  background-color: white;
+  width: 100vw -17px;
+  height: 72px;
+  outline: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.find-icon {
+  height: 24px;
+  justify-content: right;
+}
+.btn-find {
+  height: 38px;
+  width: 20%;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px 12px 12px 0px;
+}
+.btn-find:hover {
+  background-color: aliceblue;
+}
+.find-form {
+  height: 38px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  outline: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid black;
+  border-radius: 12px;
+}
+.input-find {
+  margin: 0px 0px 0px 6px;
+  height: 100%;
+  width: 80%;
+  padding: 0px;
+  border: none;
+  border-radius: 12px;
+  outline: none;
+}
+.cart-icon {
+  height: 60px;
+  margin: 6px 6px 0px 12px;
+}
+.avatar {
+  height: 60px;
+  margin: 20px 6px 0px 0px;
+  border-radius: 30px;
+  outline: 1px solid black;
+}
+
+.logo-png {
+  flex-grow: 1;
+  height: 42px;
+  margin: 0px 0px 0px 6px;
+}
+.logo-png:hover {
+  border-bottom: 3px solid dimgray;
+  padding: 16px 0px 15px 0px;
+  margin-top: 2px;
+}
+.logo {
+  flex-grow: 1;
+}
+.cart {
+  flex-grow: 1;
+}
+.find {
+  flex-grow: 8;
+}
+.account {
+  flex-grow: 1;
+}
+
+
+
+
+/*CONTAINER*/
+.container {
+  height: 100vh - 72px;
+  width: 100vw -17px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  scroll-snap-type: y mandatory;
+}
+.item {
+  overflow: scroll;
+  scrollbar-width: unset;
+  text-align: center;
+}
+.item::-webkit-scrollbar {
+  width: 0px !important;
+  display: none; 
+}
+.container-menu {
+  border-right: 2px solid black;
+  height: 100vh;
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+}
+.container-items {
+  flex-grow: 90%;
+}

@@ -1,0 +1,61 @@
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "username":"lenam2",
+    "password":"1234"
+}
+
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username":"lenam",
+    "password":"1234"
+}
+
+###
+POST http://localhost:5000/api/types
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4ZWEyZmJlZTk4ZTkzZDRiZWU4ZTMiLCJpYXQiOjE2NDc2ODYyNDF9.-K-sSOpjBvNS7ZvUh5jugCsIKqA7oOgJ_h0EDp1_3rc
+
+{
+    "nameType":"Thức ăn khô 1"
+}
+
+
+
+
+
+
+###
+POST http://localhost:5000/api/items
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4ZWEyZmJlZTk4ZTkzZDRiZWU4ZTMiLCJpYXQiOjE2NDc2ODYyNDF9.-K-sSOpjBvNS7ZvUh5jugCsIKqA7oOgJ_h0EDp1_3rc
+
+{
+    "itemName":"Thức ăn Khô PetFoody0â",
+    "quantily": 20,
+    "priceImport":100000,
+    "priceExport":150000,
+    "description":"Dùng ngay khi mở gói",
+    "pathImage":"https://product.hstatic.net/1000238938/product/023100281964_medium.jpg",
+    "type":"6235b7d696a508aa0ed368d7"
+}
+
+
+
+###
+GET http://localhost:5000/api/items
+
+
+
+###
+POST http://localhost:5000/api/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4ZWEyZmJlZTk4ZTkzZDRiZWU4ZTMiLCJpYXQiOjE2NDc2ODYyNDF9.-K-sSOpjBvNS7ZvUh5jugCsIKqA7oOgJ_h0EDp1_3rc
+
+{
+    "item": "6235c26444aa7b97d4a56e3d"
+}
