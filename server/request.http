@@ -25,6 +25,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4Z
 }
 
 
+###
+GET http://localhost:5000/api/types
 
 
 
