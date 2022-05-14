@@ -5,6 +5,7 @@ const router = express.Router();
 
 //PUBLIC ROUTER---------------------------------------
 //GET ALL ITEMS
+
 router.get("/", async (req, res) => {
   try {
     const allItems = await Items.find({});
@@ -16,14 +17,49 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Get item by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const item = await Items.findById(req.params.id);
+    if (item) {
+      return res.json({ success: true, message: "All goood", item });
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, message: "Item not found" });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Interval server error" });
+  }
+});
+
+//Get item by ID type
+router.get("/type/:id", async (req, res) => {
+  try {
+    const items = await Items.find({ type: req.params.id });
+    if (items) {
+      return res.json({ success: true, message: "All good", items });
+    } else {
+      return res
+        .status(400)
+        .json({ success: false, message: "Get item by type ID fail" });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Interval server error" });
+  }
+});
+
 //Find by name
-router.get("/findItems/:name", async (req, res) => {
-  const name = req.params.name;
+router.post("/findItems/", async (req, res) => {
+  const { name } = req.body;
   try {
     const itemsByName = await Items.find({
       itemName: { $regex: name, $options: "i" },
     });
-    console.log(itemsByName, name);
     if (itemsByName) {
       return res.status(200).json({
         success: true,

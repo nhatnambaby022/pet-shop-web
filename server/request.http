@@ -2,7 +2,7 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-    "username":"lenam2",
+    "username":"guest",
     "password":"1234"
 }
 
@@ -11,9 +11,12 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "username":"lenam",
+    "username":"admin",
     "password":"1234"
 }
+
+###
+GET http://localhost:5000/api/types
 
 ###
 POST http://localhost:5000/api/types
@@ -26,7 +29,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4Z
 
 
 ###
-GET http://localhost:5000/api/types
+GET http://localhost:5000/api/items/type/6235b7d696a508aa0ed368d7
 
 
 
@@ -34,22 +37,22 @@ GET http://localhost:5000/api/types
 ###
 POST http://localhost:5000/api/items
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4ZWEyZmJlZTk4ZTkzZDRiZWU4ZTMiLCJpYXQiOjE2NDc2ODYyNDF9.-K-sSOpjBvNS7ZvUh5jugCsIKqA7oOgJ_h0EDp1_3rc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjNkNGIwMTM3ZTQzMmY4YzliODlmMTYiLCJpYXQiOjE2NTEzNzM5NjR9.E7Hg0JgD_X3spCL-qC-NH0JeQ-QHNDk7PWvs4pe-0eM
 
 {
-    "itemName":"Thức ăn Khô PetFoody0â",
+    "itemName":"Chả thịt heo Wrap",
     "quantily": 20,
-    "priceImport":100000,
-    "priceExport":150000,
+    "priceImport":60000,
+    "priceExport":100000,
     "description":"Dùng ngay khi mở gói",
     "pathImage":"https://product.hstatic.net/1000238938/product/023100281964_medium.jpg",
-    "type":"6235b7d696a508aa0ed368d7"
+    "type":"6235b58b36f995f40365b1e8"
 }
 
 
 
 ###
-GET http://localhost:5000/api/items
+GET http://localhost:5000/api/items/type/6235b58b36f995f40365b1e8
 
 
 
@@ -59,5 +62,24 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4ZWEyZmJlZTk4ZTkzZDRiZWU4ZTMiLCJpYXQiOjE2NDc2ODYyNDF9.-K-sSOpjBvNS7ZvUh5jugCsIKqA7oOgJ_h0EDp1_3rc
 
 {
-    "item": "6235c26444aa7b97d4a56e3d"
+    "item": "6235c28744aa7b97d4a56e41"
+}
+
+###
+POST http://localhost:5000/api/items/findItems/
+Content-Type: application/json
+
+{
+    "name":"PetFoody"
+}
+
+###
+PUT http://localhost:5000/api/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4ZWEyZmJlZTk4ZTkzZDRiZWU4ZTMiLCJpYXQiOjE2NTIyOTkxMzJ9.R3T-nKUpM-UVePrsVZcrkiEmbh_rVfXHcuQVe_DKPYs
+
+{
+    "user":"6208ea2fbee98e93d4bee8e3",
+    "item":"6235c26444aa7b97d4a56e3d",
+    "quantily":5
 }

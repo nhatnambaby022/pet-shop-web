@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/contexts";
+import Nav from "../header-footer/Nav";
 
 const LoginForm = () => {
   //Context
@@ -10,54 +11,63 @@ const LoginForm = () => {
     username: "",
     password: "",
   });
-
+  const [message, setMessage] = useState(<></>);
   const { username, password } = { loginForm };
 
   const onChangLoginForm = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   };
-
   const login = async (e) => {
     e.preventDefault();
     try {
-      const loginData = loginUser(loginForm);
-      console.log(loginData);
+      const loginData = await loginUser(loginForm);
+      if (!loginData.success) {
+        setMessage(<p style={{ color: "red" }}>{loginData.message}</p>);
+        setTimeout(() => setMessage(null), 5000);
+      } else {
+        window.location = "/";
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="auth-component">
-      <form className="LoginForm" onSubmit={login}>
-        <h2>Login</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          name="username"
-          value={username}
-          required
-          onChange={onChangLoginForm}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={password}
-          required
-          onChange={onChangLoginForm}
-        />
-        <button type="submit" className="btn-submit">
-          Login
-        </button>
-        <p>
-          Don't have an account?
-          <Link to="/register">
-            <span> Register</span>
-          </Link>
-        </p>
-      </form>
-    </div>
+    <>
+      <Nav />
+      <div className='auth-component'>
+        <form className='LoginForm' onSubmit={login}>
+          {message}
+          <h2>Đăng nhập</h2>
+          <input
+            type='text'
+            placeholder='Username'
+            name='username'
+            value={username}
+            required
+            onChange={onChangLoginForm}
+          />
+          <input
+            type='password'
+            placeholder='Password'
+            name='password'
+            value={password}
+            required
+            onChange={onChangLoginForm}
+          />
+          <button type='submit' className='btn-submit'>
+            Đăng nhập
+          </button>
+          <p>
+            Không có tài khoản?
+            <Link to='/register'>
+              {" "}
+              <span style={{ textDecoration: "underline" }}>Đăng kí</span>
+            </Link>
+          </p>
+        </form>
+      </div>
+    </>
   );
 };
 

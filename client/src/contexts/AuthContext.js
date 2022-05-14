@@ -1,11 +1,12 @@
-import { createContext, useReducer, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import axios from "axios";
 import { AuthReducer } from "../producers/AuthReducer";
 import { apiUrl } from "./constants";
 import { getCookie } from "../common/cookieLib";
 import setAuthTokenDefault from "../utils/setAuthToken";
 
-export const AuthContext = createContext();
+import { AuthContext } from "./contexts";
+
 const AuthContextProvider = ({ children }) => {
   const [authState, dispatch] = useReducer(AuthReducer, {
     authLoading: true,
@@ -16,8 +17,8 @@ const AuthContextProvider = ({ children }) => {
   //Check Authenticated and get User
   const loadUser = async () => {
     const token = getCookie("accessToken");
-    setAuthTokenDefault(token);
     if (token) {
+      setAuthTokenDefault(token);
       try {
         const response = await axios.get(`${apiUrl}/auth`);
         const user = response.data.user;
@@ -26,7 +27,6 @@ const AuthContextProvider = ({ children }) => {
             type: "SET_AUTH",
             payload: { isAuthenticated: true, user: user },
           });
-          console.log(authState);
         }
       } catch (error) {}
     } else {
@@ -36,9 +36,10 @@ const AuthContextProvider = ({ children }) => {
       });
     }
   };
+
   useEffect(() => {
     async function fetchData() {
-      loadUser();
+      await loadUser();
     }
     fetchData();
   }, []);
@@ -48,7 +49,6 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios.post(`${apiUrl}/auth/login`, loginForm);
       document.cookie = response.data.cookie;
-      console.log(getCookie("accessToken"));
       return response.data;
     } catch (error) {
       if (error.response.data) return error.response.data;
@@ -58,7 +58,21 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const authContextData = { loginUser, loadUser, authState };
+  const registerUser = async (registerForm) => {
+    try {
+      const response = await axios.post(
+        `${apiUrl}/auth/register`,
+        registerForm
+      );
+      if (response.data.success) return response.data;
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: error };
+    }
+  };
+
+  const authContextData = { loginUser, loadUser, authState, registerUser };
   return (
     <AuthContext.Provider value={authContextData}>
       {children}

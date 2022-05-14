@@ -1,16 +1,18 @@
-import Items from "./Items";
+import React from "react";
+import { Outlet } from "react-router-dom";
 import Nav from "../header-footer/Nav";
-const Landing = () => {
+
+const ItemsById = () => {
   return (
-    <div className=''>
+    <>
       <Nav />
       <div className='div-dog'>
         <img src={require("../../assets/dog.png")} className='img-dog' />
       </div>
       <hr />
-      <Items />
-    </div>
+      <Outlet />
+    </>
   );
 };
 
-export default Landing;
+export default ItemsById;

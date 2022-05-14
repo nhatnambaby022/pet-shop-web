@@ -19,8 +19,10 @@ router.post("/", verifyToken, async (req, res) => {
         user,
         item,
       }).populate("item", ["quantily"]);
+
       if (checkExistCart) {
-        if (checkExistCart.quantily + 1 <= checkExistCart.item.quantily) {
+        //Quantily + 1 if cart is exist
+        if (checkExistCart.quantily < checkExistCart.item.quantily) {
           const itemUpdate = {
             user,
             item,
@@ -32,11 +34,7 @@ router.post("/", verifyToken, async (req, res) => {
           );
           if (updateQuantily) {
             //return cart of user
-            console.log("a");
-            const cart = await Cart.find({ user }).populate("item", [
-              "itemName",
-              "priceExport",
-            ]);
+            const cart = await Cart.find({ user }).populate("item");
             if (cart) {
               return res.status(200).json({ success: true, cart });
             } else {
@@ -55,6 +53,7 @@ router.post("/", verifyToken, async (req, res) => {
             .json({ success: false, message: "Sold out already" });
         }
       } else {
+        //IF cart not exist, add a new cart
         const checkItemExist = await Items.findById(item);
         if (!checkItemExist || checkItemExist.quantily == 0) {
           return res
@@ -64,14 +63,15 @@ router.post("/", verifyToken, async (req, res) => {
           const newCart = new Cart({
             user,
             item,
+            quantily: 1,
           });
           await newCart.save();
-          const cart = await Cart.find({ user });
+          //reuturn new cart
+          const cart = await Cart.find({ user }).populate("item");
           if (cart) {
             return res
               .status(200)
-              .json({ success: true, cart })
-              .populate("item", ["itemName", "priceExport"]);
+              .json({ success: true, message: "Add cart successfull", cart });
           } else {
             return res
               .status(400)
@@ -92,8 +92,9 @@ router.post("/", verifyToken, async (req, res) => {
 
 router.delete("/:id", verifyToken, async (req, res) => {
   const id = req.params.id;
+  const user = req.userId;
   try {
-    const deletedCart = await Cart.findByIdAndDelete(id);
+    const deletedCart = await Cart.findOneAndDelete({ user, item: id });
     if (!deletedCart) {
       return res
         .status(400)
@@ -112,8 +113,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
 
 //Update cart
 
-router.put("/:id", verifyToken, async (req, res) => {
-  const id = req.params.id;
+router.put("/", verifyToken, async (req, res) => {
   const { user, item, quantily } = req.body;
   if (!user || !item || !quantily) {
     return res
@@ -126,11 +126,14 @@ router.put("/:id", verifyToken, async (req, res) => {
         item,
         quantily,
       };
-      const updated = await Cart.findByIdAndUpdate(id, updateQuantily);
+      const updated = await Cart.findOneAndUpdate(
+        { user, item },
+        updateQuantily
+      );
       if (updated) {
         return res.status(200).json({
           success: true,
-          message: `Cart with ID:${id} has been updated`,
+          message: `Cart with ID:${item} has been updated`,
         });
       } else {
         return res
@@ -150,7 +153,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.get("/", verifyToken, async (req, res) => {
   try {
     const id = req.userId;
-    const getCart = await Cart.find({ user: id });
+    const getCart = await Cart.find({ user: id }).populate("item");
     if (!getCart) {
       return res
         .status(400)

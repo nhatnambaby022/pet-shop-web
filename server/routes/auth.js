@@ -64,7 +64,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ success: false, message: "Interval server error" });
   }
 });
-//POST api/auth/register (Register user)
+//POST api/auth/login (Login user)
 //Public
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
