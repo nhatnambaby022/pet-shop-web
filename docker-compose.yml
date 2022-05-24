@@ -1,0 +1,19 @@
+version: '2.5.1'
+services:
+  react-app:
+    image: petwebshop
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-app
+  server:
+    image: server-petwebshop
+    ports:
+      - "5000:5000"
+    networks:
+      - mern-app
+networks:
+  mern-app:
+    driver: bridge

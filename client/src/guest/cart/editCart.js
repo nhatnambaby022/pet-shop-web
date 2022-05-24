@@ -79,8 +79,6 @@ export const setCart = (cart) => {
   return { success: true, message: "Set cart successfull" };
 };
 
-//delete cart
-
 // init cart
 export const initCart = () => {
   const cart = JSON.parse(localStorage.getItem("cart"));

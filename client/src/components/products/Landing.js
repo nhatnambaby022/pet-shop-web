@@ -1,5 +1,6 @@
 import Items from "./Items";
 import Nav from "../header-footer/Nav";
+import Footer from "../header-footer/Footer";
 const Landing = () => {
   return (
     <div className=''>
@@ -9,6 +10,7 @@ const Landing = () => {
       </div>
       <hr />
       <Items />
+      <Footer />
     </div>
   );
 };

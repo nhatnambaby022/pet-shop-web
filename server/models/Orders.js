@@ -1,34 +1,36 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Items = require("./Items");
 const Users = require("./Users");
 
 const ordersSchema = new Schema({
-  items: [
-    {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "Items",
-    },
-  ],
-  status: {
-    type: String,
-    enum: ["Accept", "Deny"],
+  user: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "Users",
+    require: true,
   },
   price: {
     type: Number,
     min: 0,
+    require: true,
   },
-  fullnameReceiver: {
+  receive: {
+    type: String,
+    require,
+  },
+  status: {
+    type: String,
+    enum: ["Wait", "Accept", "Deny", "Delivering", "Done"],
+    require: true,
+    default: "Wait",
+  },
+  note: {
     type: String,
   },
-  phoneReceiver: {
-    type: String,
-  },
-  addressReceiver: {
-    type: String,
-  },
-  user: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "Users",
+  date: {
+    type: Date,
+    require: true,
+    default: Date.now,
   },
 });
+
+module.exports = mongoose.model("Orders", ordersSchema);

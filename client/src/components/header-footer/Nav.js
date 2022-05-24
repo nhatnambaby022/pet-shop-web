@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  AuthContext,
-  CartContext,
-  ProductContext,
-} from "../../contexts/contexts";
+import { AuthContext, ProductContext } from "../../contexts/contexts";
 import { useContext } from "react";
 import { BeatLoader } from "react-spinners";
 import { deleteCookie } from "../../common/cookieLib";
@@ -27,16 +23,15 @@ const Nav = () => {
 
   //Render Account
   let account;
-  const [totalPrice, setTotalPrice] = useState(0);
   const {
     authState: { authLoading, isAuthenticated, user },
     loadUser,
   } = useContext(AuthContext);
   //Logout
-  const logout = () => {
+  const logout = async () => {
     if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
       deleteCookie("accessToken");
-      loadUser();
+      await loadUser();
     }
   };
   if (authLoading) {
@@ -75,10 +70,35 @@ const Nav = () => {
       </>
     );
   }
-
+  //is admin
+  let admin = <></>;
+  if (isAuthenticated && user.username == "admin") {
+    admin = (
+      <Link to='/dashboard/users'>
+        <button
+          style={{
+            height: "36px",
+            width: "80px",
+            borderRadius: "6px",
+            position: "fixed",
+            bottom: "12px",
+            right: "12px",
+            zIndex: 2000,
+            backgroundColor: "green",
+            color: "white",
+            border: "1px solid white",
+          }}>
+          Dashboard
+        </button>
+      </Link>
+    );
+  } else {
+    admin = <></>;
+  }
   //render Nav
   return (
     <>
+      {admin}
       <div className='nav'>
         <div className='logo'>
           <Link to='/'>

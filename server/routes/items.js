@@ -1,6 +1,9 @@
 const express = require("express");
 const verifyTokenAdmin = require("../middleware/admin");
+const Cart = require("../models/Cart");
 const Items = require("../models/Items");
+const ItemsType = require("../models/ItemsType");
+const OrderDetail = require("../models/OrderDetail");
 const router = express.Router();
 
 //PUBLIC ROUTER---------------------------------------
@@ -8,19 +11,23 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const allItems = await Items.find({});
-    return res.json({ success: true, message: "All good", allItems });
-  } catch (error) {
+    const allItems = await Items.find({}).populate("type");
+    if (allItems)
+      return res.json({ success: true, message: "All good", allItems });
     return res
       .status(400)
       .json({ success: false, message: "Get all item is fail" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Interval server error" });
   }
 });
 
 //Get item by ID
 router.get("/:id", async (req, res) => {
   try {
-    const item = await Items.findById(req.params.id);
+    const item = await Items.findById(req.params.id).populate("type");
     if (item) {
       return res.json({ success: true, message: "All goood", item });
     } else {
@@ -87,33 +94,56 @@ router.post("/", verifyTokenAdmin, async (req, res) => {
     pathImage,
     type,
   } = req.body;
-  if (!itemName && !quantily && !priceImport && !priceExport && !type) {
+  console.log({
+    itemName,
+    quantily,
+    priceImport,
+    priceExport,
+    description,
+    pathImage,
+    type,
+  });
+  if (
+    !itemName ||
+    !quantily ||
+    !priceImport ||
+    !pathImage ||
+    !priceExport ||
+    !type
+  ) {
     return res
       .status(400)
-      .json({ success: false, message: "Item name is null" });
+      .json({ success: false, message: "One or more is null" });
   } else {
     try {
-      const checkItem = await Items.findOne({ itemName });
-      if (checkItem) {
+      const checkType = await ItemsType.findById(type);
+      if (checkType) {
+        const checkItem = await Items.findOne({ itemName });
+        if (checkItem) {
+          return res
+            .status(400)
+            .json({ success: false, message: "This item is already" });
+        } else {
+          const newItem = new Items({
+            itemName,
+            quantily,
+            priceImport,
+            priceExport,
+            description,
+            pathImage,
+            type,
+          });
+          await newItem.save();
+          return res.json({
+            success: true,
+            message: "Add item successful",
+            newItem,
+          });
+        }
+      } else {
         return res
           .status(400)
-          .json({ success: false, message: "This item is already" });
-      } else {
-        const newItem = new Items({
-          itemName,
-          quantily,
-          priceImport,
-          priceExport,
-          description,
-          pathImage,
-          type,
-        });
-        await newItem.save();
-        return res.json({
-          success: true,
-          message: "Add item successful",
-          newItem,
-        });
+          .json({ success: false, message: "Type product not found!" });
       }
     } catch (error) {
       console.log(error);
@@ -130,8 +160,11 @@ router.delete("/:id", verifyTokenAdmin, async (req, res) => {
     return res.status(400).json({ success: false, message: "Id is empty" });
   try {
     const deleted = await Items.findOneAndDelete({ _id: req.params.id });
-    if (!deleted)
+    if (!deleted) {
+      await Cart.deleteMany({ item: req.params.id });
+      await OrderDetail.deleteMany({ item: req.params.id });
       return res.status(400).json({ success: true, message: "Id not found" });
+    }
     return res.status(200).json({
       success: true,
       message: `Item with Id:${req.params.id} has been deleted`,
@@ -158,7 +191,14 @@ router.put("/:id", verifyTokenAdmin, async (req, res) => {
     pathImage,
     type,
   } = req.body;
-  if (!itemName || !quantily || !priceImport || !priceExport || !type) {
+  if (
+    !itemName ||
+    !quantily ||
+    !priceImport ||
+    !pathImage ||
+    !priceExport ||
+    !type
+  ) {
     return res.status(400).json({ success: false, message: "Input empty" });
   } else {
     try {

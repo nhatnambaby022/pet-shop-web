@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "../header-footer/Footer";
 import Nav from "../header-footer/Nav";
 
 const ItemsById = () => {
@@ -11,6 +12,7 @@ const ItemsById = () => {
       </div>
       <hr />
       <Outlet />
+      <Footer />
     </>
   );
 };

@@ -1,6 +1,9 @@
 a{
   text-decoration: none;
 }
+table, th, td {
+  border: 1px solid;
+}
 .auth-component {
   height: 100vh;
   width: 100vw;
@@ -189,7 +192,7 @@ input {
 .cart:hover > .cart-dropdown{
   transition: ease-in;
   border-radius: 6px;
-  right: -10em;
+  right: -5.4em;
   top: 71.4px;
   background-color: white;
   display: flex ;
@@ -226,7 +229,7 @@ input {
   margin: 3px 0px 0px 3px;
 }
 .totalPrice{
-  height: 42px;
+  height: 72px;
   width: 90%;
   display: flex;
   align-items: center;
@@ -242,7 +245,8 @@ input {
 .button-to-order{
   color: rgb(251, 255, 240);
   margin: 3px 0px 6px 0px;
-  padding: 6px 24px 6px 24px;
+  padding: 6px 0px 6px 0px;
+  width: 100px;
   border-radius: 6px;
   background-color: rgb(255, 185, 6);
   outline: none;
@@ -292,7 +296,6 @@ input {
 }
 .container-items {
   width: 100%;
-  list-style:none;
   display:flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -400,12 +403,58 @@ input {
   background-color: white;
   display: flex ;
   flex-direction: column;
-  width: 80%;
+  width: 50%;
   max-width: 400px;
+  min-width: 310px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   font-size: 12px;
   align-items: center;
   justify-content: center;
+}
+.order-layout{
+  position: relative;
+  min-width: 280px;
+  margin: 12px 6px 12px 6px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.order-layout > span{
+  margin: 6px 12px 12px 6px;
+}
+.link-view{
+  color: blue;
+  position: absolute;
+  top:6px;
+  right: 6px;
+  margin-top: 3px;
+  height: 32px;
+  width: 48px;
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  outline: 2px solid blue;
+  border: none;
+}
+.link-view:hover{
+  transform: scale(1.04);
+}
+.button-del{
+  color: rgb(255, 0, 0);
+  position: absolute;
+  top: 42px;
+  right: 6px;
+  margin-top: 3px;
+  height: 32px;
+  width: 48px;
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  outline: 2px solid rgb(255, 0, 0);
+  border: none;
+}
+.button-del:hover{
+  transform: scale(1.04);
 }
 
 /*-----------------------------------USER INFORMATION--------------------*/
@@ -446,4 +495,172 @@ input {
   transform: scale(1.01);
 }
 
-/*infor-login*/
+/*=======================DASHBOARD====================================================*/
+
+
+/*-----------------USER MANAGER-------------------*/
+.edit{
+  margin: 3px 3px 3px 3px;
+  color: blue;
+  width: 64px;
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  outline:1px solid blue;
+  border: none;
+}
+.edit:hover {
+  transform: scale(1.02);
+}
+.delete{
+  margin: 3px 3px 3px 3px;
+  color: red;
+  width: 64px;
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  outline:1px solid red;
+  border: none;
+}
+.delete:hover {
+  transform: scale(1.02);
+}
+.out-form{
+  display: inline-block;
+  text-align: center;
+  font-size: 24px;
+  transition: transform 2s;
+  width: 32px;
+  height: 39px;
+}
+.out-form:hover{
+  color: red;
+  transform: rotate(180deg);
+}
+
+/*-------------------------CART MANAGR------------------------------*/
+
+.select-type{
+  height: 38px;
+  width: 260px;
+  border-radius: 6px;
+  border-style: double;
+  margin-top: 6px;    
+}
+
+
+/*NAV REPONSIVE*/
+
+@media screen and (max-width: 600px) {
+  .auth-link{
+    font-size: 12px;
+  }
+  .cart {
+    flex-grow: 1;
+    position: relative;
+  }
+  .nav { 
+    position: fixed;
+    z-index: 2000;
+    background-color: white;
+    width: 100vw;
+    height: 72px;
+    outline: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .find-icon {
+    height: 18px;
+    justify-content: right;
+  }
+  .btn-find {
+    height: 38px;
+    width: 20%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 12px 12px 0px;
+  }
+  .btn-find:hover {
+    background-color: aliceblue;
+  }
+  .find-form {
+    height: 38px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid black;
+    border-radius: 12px;
+  }
+  .input-find {
+    font-size: 12px;
+    margin: 0px 0px 0px 6px;
+    height: 100%;
+    width: 80%;
+    padding: 0px;
+    border: none;
+    border-radius: 12px;
+    outline: none;
+  }
+  .cart-icon {
+    height: 32px;
+    margin: 6px 6px 0px 6px;
+  }
+  .avatar {
+    height: 48px;
+    margin: 6px 6px 0px 0px;
+    border-radius: 30px;
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  .auth-links{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 6px;
+  }
+  
+  .auth-link{
+    font-style: italic;
+  }
+  .auth-link:hover{
+    transform: scale(1.05);
+  }
+  .username{
+    font-size: 14px;
+  }
+  .username:hover{
+    transform: scale(1.05);
+  }
+  .button-logout{
+    margin-top: 6px;
+    font-style: italic;
+    font-weight: 100;
+    font-size: 10px;
+    background-color: white;
+    margin-left: -5px;
+    border: none;
+  }
+  .button-logout:hover{
+    transform: scale(1.05);
+  }
+  .logo-png {
+    flex-grow: 1;
+    height: 32px;
+    margin: 0px 3px 0px 3px;
+  }
+  .logo-png:hover {
+    border-bottom: 3px solid dimgray;
+    padding: 16px 0px 15px 0px;
+    margin-top: 2px;
+  }
+  .logo {
+    flex-grow: 1;
+  }
+  .cart:hover > .cart-dropdown{
+    right: -8em;
+  }
+  
+}

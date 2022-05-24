@@ -1,4 +1,5 @@
 const express = require("express");
+const verifyTokenAdmin = require("../middleware/admin");
 const verifyToken = require("../middleware/auth");
 const Cart = require("../models/Cart");
 const Items = require("../models/Items");
@@ -87,9 +88,28 @@ router.post("/", verifyToken, async (req, res) => {
     }
   }
 });
+//Delete all cart of user
+router.delete("/", verifyToken, async (req, res) => {
+  const user = req.userId;
+  try {
+    const deletedCart = await Cart.deleteMany({ user });
+    if (!deletedCart) {
+      return res
+        .status(400)
+        .json({ success: false, message: "ID not found, delete failed" });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: `Cart has been deleted`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Interval server error" });
+  }
+});
 
-//DELETE cart
-
+//DELETE cart with id item and user
 router.delete("/:id", verifyToken, async (req, res) => {
   const id = req.params.id;
   const user = req.userId;
@@ -114,7 +134,8 @@ router.delete("/:id", verifyToken, async (req, res) => {
 //Update cart
 
 router.put("/", verifyToken, async (req, res) => {
-  const { user, item, quantily } = req.body;
+  const user = req.userId;
+  const { item, quantily } = req.body;
   if (!user || !item || !quantily) {
     return res
       .status(400)
@@ -164,6 +185,136 @@ router.get("/", verifyToken, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Interval server error" });
+  }
+});
+
+//-------------------------------ADMINROUTER------------------------
+//GET ALL CART
+router.get("/all", verifyTokenAdmin, async (req, res) => {
+  try {
+    const carts = await Cart.find({}).populate("user").populate("item");
+    if (carts)
+      return res
+        .status(200)
+        .json({ success: true, message: "Get all cart successfull!", carts });
+    return res.status(400).json({ success: false, message: "Cart not found!" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Interval server error" });
+  }
+});
+
+//delete cart with id cart
+router.delete("/admin/:id", verifyTokenAdmin, async (req, res) => {
+  const id = req.params.id;
+  try {
+    const deletedCart = await Cart.findByIdAndDelete(id);
+    if (!deletedCart) {
+      return res
+        .status(400)
+        .json({ success: false, message: "ID not found, delete failed" });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: `Cart with ID: ${id} has been deleted`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Interval server error" });
+  }
+});
+
+//ADD CART
+router.post("/admin", verifyTokenAdmin, async (req, res) => {
+  try {
+    const { username, itemName, quantily } = req.body;
+
+    //check username exist
+    const checkUsername = await Users.find({ username });
+    if (checkUsername.length == 0)
+      return res
+        .status(400)
+        .json({ success: false, message: "Username not found" });
+
+    //check item exist
+    const checkItem = await Items.find({ itemName });
+    if (checkItem.length == 0)
+      return res
+        .status(400)
+        .json({ success: false, message: "Item not found" });
+
+    //get itemId and userId
+    const itemId = checkItem[0]._id;
+    const userId = checkUsername[0]._id;
+    //check cart exist
+    const checkCart = await Cart.find({ user: userId, item: itemId });
+    if (checkCart.length !== 0)
+      return res.status(400).json({ success: false, message: "Cart already!" });
+
+    //check quantily and add cart
+    if (quantily > 0 && quantily <= checkItem[0].quantily) {
+      const addCart = new Cart({
+        user: userId,
+        item: itemId,
+        quantily,
+      });
+      await addCart.save();
+      return res
+        .status(200)
+        .json({ success: true, message: "Add cart successfull!" });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: `Quantily must be between 1-${checkItem.quantily}}`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Interval server error" });
+  }
+});
+//update cart
+router.put("/admin", verifyTokenAdmin, async (req, res) => {
+  const { id, quantily } = req.body;
+  if (!id || !quantily) {
+    return res
+      .status(400)
+      .json({ message: false, message: "Id or quantily is empty" });
+  } else {
+    try {
+      //check cart
+      const cart = await Cart.findById(id).populate("item");
+      if (!cart)
+        return res
+          .status(400)
+          .json({ success: false, message: "Cart not found" });
+
+      //check quantily value
+      if (quantily < 0 || quantily > cart.item.quantily)
+        return res.status(400).json({
+          success: false,
+          message: `Quantily must between 1-${cart.item.quantily}`,
+        });
+
+      // update quantily
+      const updated = await Cart.findByIdAndUpdate(id, { quantily });
+      if (updated) {
+        return res.status(200).json({
+          success: true,
+          message: `Cart with ID:${id} has been updated`,
+        });
+      } else {
+        return res
+          .status(400)
+          .json({ success: false, message: "Cart not found" });
+      }
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Interval server error" });
+    }
   }
 });
 module.exports = router;

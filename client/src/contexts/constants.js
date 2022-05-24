@@ -9,3 +9,4 @@ export const TYPE_PRODUCT_LOADED_FAIL = "TYPE_PRODUCT_LOADED_FAIL";
 export const SET_CART = "SET_CART";
 export const ADD_CART = "ADD_CART";
 export const UPDATE_CART = "UPDATE_CART";
+export const SET_ORDER = "UPDATE_CART";

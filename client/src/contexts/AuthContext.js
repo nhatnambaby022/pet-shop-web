@@ -6,6 +6,7 @@ import { getCookie } from "../common/cookieLib";
 import setAuthTokenDefault from "../utils/setAuthToken";
 
 import { AuthContext } from "./contexts";
+import { useToasts } from "react-toast-notifications";
 
 const AuthContextProvider = ({ children }) => {
   const [authState, dispatch] = useReducer(AuthReducer, {
@@ -13,6 +14,49 @@ const AuthContextProvider = ({ children }) => {
     isAuthenticated: false,
     user: null,
   });
+  //addToast
+  const { addToast } = useToasts();
+
+  //change password
+  const changePassword = async (password, newPassword) => {
+    try {
+      if (!password || !newPassword) {
+        return { success: false, message: "Vui lòng điền đầy đủ thông tin!" };
+      } else {
+        const response = await axios.put(`${apiUrl}/users/password`, {
+          password,
+          newPassword,
+        });
+        return response.data;
+      }
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      return { success: false, message: error };
+    }
+  };
+  //update userinfor
+  const updateUser = async (userInfor) => {
+    const { fullname, phone, email, address } = userInfor;
+    try {
+      if (!fullname || !phone || !email || !address) {
+        return { success: false, message: "One or more is empty." };
+      } else {
+        const response = await axios.put(`${apiUrl}/users`, {
+          fullname,
+          phone,
+          email,
+          address,
+        });
+        if (response.data.success) {
+          addToast("Cập nhật thông tin thành công", { appearance: "success" });
+          return response.data;
+        }
+      }
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      return { success: false, message: error };
+    }
+  };
 
   //Check Authenticated and get User
   const loadUser = async () => {
@@ -72,7 +116,14 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const authContextData = { loginUser, loadUser, authState, registerUser };
+  const authContextData = {
+    loginUser,
+    loadUser,
+    authState,
+    registerUser,
+    updateUser,
+    changePassword,
+  };
   return (
     <AuthContext.Provider value={authContextData}>
       {children}

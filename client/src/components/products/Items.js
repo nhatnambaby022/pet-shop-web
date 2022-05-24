@@ -95,8 +95,9 @@ const Items = () => {
           const itemInCart = checkItemInCart(product._id);
           //if maximum of quantily disabled button
           if (
-            itemInCart.exist &&
-            cartState.items[itemInCart.index].quantily == product.quantily
+            (itemInCart.exist &&
+              cartState.items[itemInCart.index].quantily == product.quantily) ||
+            product.quantily == 0
           )
             button = (
               <button

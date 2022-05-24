@@ -44,7 +44,9 @@ const CartContextProvider = ({ children }) => {
         type: SET_CART,
         payload: items,
       });
-    } catch (error) {}
+    } catch (error) {
+      return { success: false, message: error };
+    }
   };
 
   //set cart state
@@ -119,6 +121,9 @@ const CartContextProvider = ({ children }) => {
         //check value quantily
         const product = response.data.item;
         if (quantilyUpdate < 0 || quantilyUpdate > product.quantily) {
+          if (quantilyUpdate > product.quantily) {
+            await updateCart(userID, itemID, product.quantily);
+          }
           return { success: false, message: "Quantily value incorrect!" };
         } else {
           //update

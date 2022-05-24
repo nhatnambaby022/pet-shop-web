@@ -4,9 +4,13 @@ import { AuthContext } from "../contexts/contexts";
 
 const ProtectedRoute = () => {
   const {
-    authState: { isAuthenticated },
+    authState: { authLoading, isAuthenticated },
   } = useContext(AuthContext);
-  return isAuthenticated ? <Navigate to='/' /> : <Outlet />;
+  if (authLoading) {
+    return <h3>Loading...</h3>;
+  } else {
+    return isAuthenticated ? <Navigate to='/' /> : <Outlet />;
+  }
 };
 
 export default ProtectedRoute;

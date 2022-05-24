@@ -31,13 +31,14 @@ const CartMenu = ({ button, className }) => {
   //up or down quantily
   const upOrDownQuantily = async (str, quantily, itemID) => {
     if (str == "-") {
-      await updateCart(user ? user : GUESTID, itemID, quantily - 1);
+      console.log();
+      await updateCart(user ? user._id : GUESTID, itemID, quantily - 1);
       getAllItemsInCart();
     } else if (str == "+") {
-      await updateCart(user ? user : GUESTID, itemID, quantily + 1);
+      await updateCart(user ? user._id : GUESTID, itemID, quantily + 1);
       getAllItemsInCart();
     } else if (str == "0") {
-      await updateCart(user ? user : GUESTID, itemID, 0);
+      await updateCart(user ? user._id : GUESTID, itemID, 0);
       getAllItemsInCart();
     }
   };
@@ -117,8 +118,18 @@ const CartMenu = ({ button, className }) => {
           </div>
         );
       })}
-      <div className='totalPrice'>
-        {buttonE}
+      <div className='totalPrice' value={total}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Link to='/ordered'>
+            <button
+              className='button-to-order'
+              style={{ margin: "6px 6px 0px 0px" }}>
+              Đơn hàng
+            </button>
+          </Link>
+          {buttonE}
+        </div>
+
         <div className='totalPrice-price'>{`Tổng tiền: ${total}`}</div>
       </div>
     </div>

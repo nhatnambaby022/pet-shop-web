@@ -23,7 +23,6 @@ const ItemSchema = new Schema({
     min: 0,
     required: true,
   },
-
   description: {
     type: String,
   },
@@ -34,7 +33,6 @@ const ItemSchema = new Schema({
   type: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "itemtype",
-    unique: true,
   },
 });
 

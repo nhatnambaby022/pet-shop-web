@@ -83,3 +83,44 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjA4Z
     "item":"6235c26444aa7b97d4a56e3d",
     "quantily":5
 }
+
+
+###
+GET http://localhost:5000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjdhNDUwOGE0M2Y4ODJkZGNjYTNhMWIiLCJpYXQiOjE2NTI1ODU1MTd9.nHTBKJfmE1Euzst_Req3yVn33jjmZdGT1XuJrq2NXUg
+
+###
+PUT http://localhost:5000/api/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjdhNDUwOGE0M2Y4ODJkZGNjYTNhMWIiLCJpYXQiOjE2NTI1ODU1MTd9.nHTBKJfmE1Euzst_Req3yVn33jjmZdGT1XuJrq2NXUg
+
+{
+    "fullname": "Lê Thái Nhật Nam",
+    "phone": "0963005441",
+    "email": "nhatnam11052000@gmail.com",
+    "address": "336, Hưng Thành Đông, Long Hưng B, Lấp Vò, Đồng Tháp"
+}
+
+###
+GET http://localhost:5000/api/orders/6283052deb14913fcfe55298
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjgxZTJjNWJmZTc1YmUyM2FjOWNjYmUiLCJpYXQiOjE2NTI3MjU2OTh9.vR7003vfM3bMlZt4L0t0yqVJT6lZVf_roC--aa2zHyA
+
+###
+GET http://localhost:5000/api/orderDetail/628294e68991728f38170447
+
+##3
+DELETE http://localhost:5000/api/orders
+Content-Type: application/json
+
+{
+    
+    "order":"62830bee057fee47fbf0d39e"
+}
+
+###
+GET http://localhost:5000/api/users/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjgwOTVmNmY4MTZkYzY1MTcyYjdiMmYiLCJpYXQiOjE2NTI3Nzg4ODl9.0PaNwYoCLjApY2Ru_OME8oUytYdkyRwzHxsYabaWu-A
+
+
+###
+GET http://localhost:5000/api/cart/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjgwOTVmNmY4MTZkYzY1MTcyYjdiMmYiLCJpYXQiOjE2NTI4NDkwMDB9.7uMoDJs-cfDESbboERcirV6UsrTg52NTTczaFKU7Z2Q

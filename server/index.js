@@ -7,6 +7,9 @@ const authRouter = require("./routes/auth");
 const itemsRouter = require("./routes/items");
 const itemstypeRouter = require("./routes/itemType");
 const cartRouter = require("./routes/cart");
+const userRouter = require("./routes/user");
+const orderRouter = require("./routes/order");
+const orderDetail = require("./routes/orderDetail");
 const connectDB = async () => {
   try {
     await mongoose.connect(
@@ -28,6 +31,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/items", itemsRouter);
 app.use("/api/types", itemstypeRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/orderDetail", orderDetail);
 
 const PORT = 5000;
 

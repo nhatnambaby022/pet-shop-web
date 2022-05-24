@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/contexts";
 import Nav from "../header-footer/Nav";
+import Footer from "../header-footer/Footer";
 const RegisterForm = () => {
   const { registerUser } = useContext(AuthContext);
 
