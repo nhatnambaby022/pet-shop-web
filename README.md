@@ -27,4 +27,5 @@
   - In page /register: create user with username
     + guest: get guest _id and change "GUESTID" in "client/src/contexts/constants.js"
     + admin: this is a admin user
-  
+## SET YOUR API URL
+  - In "client/src/contexts/constants.js", set "apiUrl" with your apiUrl
